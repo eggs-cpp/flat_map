@@ -1,0 +1,27 @@
+# Copyright Agustin K-ballo Berge, Fusion Fenix 2026
+#
+# Distributed under the Boost Software License, Version 1.0. (See accompanying
+# file LICENSE.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+name: format
+
+on:
+  push:
+    branches: [ main, feature/** ]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Run clang-format check
+        uses: jidicula/clang-format-action@v4.16.0
+        with:
+          clang-format-version: "22"
+          check-path: "."
+          exclude-regex: 'test/catch\.hpp'
