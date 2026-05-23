@@ -35,7 +35,7 @@ jobs:
             compiler: apple-clang-16
             preset: dev-clang
 
-          # ── Windows 2022 / MSVC (Ninja Multi-Config) ──
+          # ── Windows 2022 / MSVC ──
           - os: windows-2022
             compiler: msvc
             preset: dev-msvc
@@ -63,10 +63,30 @@ jobs:
         run: sudo apt-get install -y ninja-build
 
       - name: Configure
-        run: cmake --preset ${{ matrix.preset }}
+        run: cmake --preset ${{ matrix.preset }} -B build/${{ matrix.preset }}
 
-      - name: Build
-        run: cmake --build --preset ${{ matrix.preset }}-debug
+      - name: Build (Debug)
+        run: cmake --build build/${{ matrix.preset }} --config Debug
 
-      - name: Test
-        run: ctest --preset ${{ matrix.preset }}-debug
+      - name: Test (Debug)
+        run: ctest --test-dir build/${{ matrix.preset }} --build-config Debug
+               --output-on-failure
+               --no-compress-output
+               --output-junit test-results-${{ matrix.compiler }}-debug.xml
+
+      - name: Build (Release)
+        run: cmake --build build/${{ matrix.preset }} --config Release
+
+      - name: Test (Release)
+        run: ctest --test-dir build/${{ matrix.preset }} --build-config Release
+               --output-on-failure
+               --no-compress-output
+               --output-junit test-results-${{ matrix.compiler }}-release.xml
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: test-results-${{ matrix.compiler }}
+          path: build/${{ matrix.preset }}/test-results-*.xml
+          retention-days: 30
