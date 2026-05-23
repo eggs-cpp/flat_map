@@ -25,7 +25,7 @@ jobs:
         with:
           clang-format-version: "22"
           check-path: "."
-          exclude-regex: 'test/catch\.hpp'
+          exclude-regex: 'test/catch2/'
 
       # gersemi
       - name: Set up Python

@@ -12,6 +12,12 @@
       "generator": "Ninja Multi-Config",
       "binaryDir": "${sourceDir}/build/${presetName}",
       "cacheVariables": {
+        "CMAKE_CONFIGURATION_TYPES": "Debug;Release",
+        "CMAKE_CXX_STANDARD": "23",
+        "CMAKE_CXX_STANDARD_REQUIRED": "ON",
+        "CMAKE_CXX_EXTENSIONS": "OFF",
+        "CMAKE_COMPILE_WARNING_AS_ERROR": "ON",
+        "CMAKE_LINK_WARNING_AS_ERROR": "ON",
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
         "BUILD_EXAMPLE": "ON",
         "BUILD_TESTING": "ON",
@@ -25,9 +31,6 @@
       "cacheVariables": {
         "CMAKE_C_COMPILER": "gcc",
         "CMAKE_CXX_COMPILER": "g++"
-      },
-      "environment": {
-        "CXXFLAGS": "-std=c++23 -Wall -Wextra -Wpedantic -Werror"
       }
     },
     {
@@ -37,9 +40,6 @@
       "cacheVariables": {
         "CMAKE_C_COMPILER": "clang",
         "CMAKE_CXX_COMPILER": "clang++"
-      },
-      "environment": {
-        "CXXFLAGS": "-std=c++23 -Wall -Wextra -Wpedantic -Werror"
       }
     },
     {
@@ -48,7 +48,7 @@
       "inherits": "dev-clang",
       "cacheVariables": {},
       "environment": {
-        "CXXFLAGS": "-std=c++23 -stdlib=libc++ -Wall -Wextra -Wpedantic -Werror",
+        "CXXFLAGS": "-stdlib=libc++",
         "LDFLAGS": "-stdlib=libc++"
       }
     },
@@ -59,9 +59,6 @@
       "cacheVariables": {
         "CMAKE_C_COMPILER": "cl",
         "CMAKE_CXX_COMPILER": "cl"
-      },
-      "environment": {
-        "CXXFLAGS": "/std:c++23preview /permissive- /EHsc /W4"
       }
     },
     {
@@ -74,7 +71,7 @@
       "displayName": "TSan / Clang",
       "inherits": "dev-clang",
       "environment": {
-        "CXXFLAGS": "-fsanitize=thread -fno-omit-frame-pointer -Wall -Wextra"
+        "CXXFLAGS": "-fsanitize=thread -fno-omit-frame-pointer"
       }
     }
   ],
