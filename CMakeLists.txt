@@ -61,7 +61,12 @@ endif()
 if(ENABLE_INSTALL)
     include(CMakePackageConfigHelpers)
 
-    install(TARGETS _eggs_flat_map EXPORT Eggs::FlatMap FILE_SET HEADERS)
+    install(
+        TARGETS _eggs_flat_map
+        EXPORT Eggs::FlatMap
+        FILE_SET HEADERS
+        INCLUDES DESTINATION include
+    )
 
     install(
         EXPORT Eggs::FlatMap
